@@ -1,0 +1,54 @@
+[package]
+name = "omnidrive"
+version = "0.1.0"
+description = "OmniDrive — Securely share local files with AI agents via the Model Context Protocol"
+authors = ["you"]
+edition = "2021"
+default-run = "omnidrive"
+autobins = false
+
+[lib]
+name = "mcp_drive_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[[bin]]
+name = "omnidrive"
+path = "src/main.rs"
+
+[[bin]]
+name = "omnidrive-server"
+path = "src/bin/mcp_server/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["tray-icon"] }
+tauri-plugin-opener = "2"
+tauri-plugin-dialog = "2"
+tauri-plugin-store = "2"
+tauri-plugin-shell = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+glob = "0.3"
+base64 = "0.22"
+pdf-extract = "0.7"
+dirs = "5"
+mime_guess = "2.0"
+schemars = "1" 
+
+regex = "1"
+walkdir = "2"
+zip = "2"
+chrono = "0.4"
+lazy_static = "1.4"
+uuid = { version = "1.8", features = ["v4"] }
+sysinfo = "0.30"
+notify = "6.1"
+axum = "0.7"
+tower = "0.5"
+tower-http = { version = "0.6", features = ["cors"] }
+
+# MCP SDK
+rmcp = { version = "0.16", features = ["server", "transport-io", "macros", "transport-streamable-http-server"] }
