@@ -55,29 +55,84 @@ OmniDrive is built with a "Privacy First" philosophy:
 
 ---
 
-## 🔧 Installation
+## 📥 Download (End Users)
+
+If you just want to use OmniDrive, download the latest installer from:
+
+- [GitHub Releases](https://github.com/sp-22/omnidrive-mcp/releases/latest)
+
+Available assets depend on platform and include installers such as `.dmg` (macOS), `.msi`/`.exe` (Windows), and Linux bundles.
+
+---
+
+## 🔧 Build From Source (Developers)
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/) (v18+)
-- [Rust](https://www.rust-lang.org/) (for building the native sidecar)
+- [Node.js](https://nodejs.org/) 20+
+- [Rust](https://www.rust-lang.org/tools/install) (stable)
+- Tauri system dependencies for your OS: [Tauri Prerequisites](https://v2.tauri.app/start/prerequisites/)
 
 ### Setup
-1. **Clone & Install**:
+1. Clone the repository:
    ```bash
    git clone https://github.com/sp-22/omnidrive-mcp.git
    cd omnidrive-mcp
-   npm install
    ```
 
-2. **Run in Development**:
+2. Install dependencies:
+   ```bash
+   npm ci
+   ```
+
+3. Run in development:
    ```bash
    npm run tauri dev
    ```
 
-3. **Build Production App**:
+4. Build production bundles:
    ```bash
    npm run tauri build
    ```
+
+Build artifacts are generated under `src-tauri/target/release/bundle/`.
+
+---
+
+## 🤝 Contributing
+
+1. Fork this repo
+2. Create a branch
+3. Commit and push your changes
+4. Open a Pull Request
+
+To download source without Git, use GitHub's **Code -> Download ZIP** on the repository page.
+
+---
+
+## 🚀 Release Process (Maintainers)
+
+This repository includes a GitHub Actions workflow that builds and publishes release assets for macOS, Windows, and Linux whenever a version tag is pushed.
+
+1. Update versions:
+   - `package.json`
+   - `src-tauri/Cargo.toml`
+   - `src-tauri/tauri.conf.json`
+
+2. Commit and push:
+   ```bash
+   git add .
+   git commit -m "chore: release v0.x.x"
+   git push
+   ```
+
+3. Create and push a tag:
+   ```bash
+   git tag v0.x.x
+   git push origin v0.x.x
+   ```
+
+4. The workflow will publish binaries to:
+   - [Releases](https://github.com/sp-22/omnidrive-mcp/releases)
 
 ---
 
