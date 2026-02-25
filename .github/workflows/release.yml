@@ -20,9 +20,11 @@ jobs:
           - platform: ubuntu-22.04
             bundles: appimage
           - platform: windows-latest
-            bundles: msi
+            bundles: nsis
 
     runs-on: ${{ matrix.platform }}
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout
@@ -44,9 +46,23 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          registry-url: https://registry.npmjs.org
 
       - name: Install frontend dependencies
-        run: npm ci
+        shell: bash
+        run: |
+          npm config set fetch-retries 5
+          npm config set fetch-retry-mintimeout 20000
+          npm config set fetch-retry-maxtimeout 120000
+          for i in 1 2 3; do
+            npm ci && break
+            if [ "$i" -eq 3 ]; then
+              echo "npm ci failed after 3 attempts"
+              exit 1
+            fi
+            echo "npm ci failed (attempt $i), retrying in 15s..."
+            sleep 15
+          done
 
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -68,7 +84,7 @@ jobs:
             OmniDrive ${{ github.ref_name }}
 
             Download guide:
-            - Windows: download the `.msi` file
+            - Windows: download the `.exe` file
             - macOS: download the `.dmg` file
             - Linux: download the `.AppImage` file
 
