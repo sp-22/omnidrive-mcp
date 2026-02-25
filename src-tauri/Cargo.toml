@@ -8,7 +8,7 @@ default-run = "omnidrive"
 autobins = false
 
 [lib]
-name = "mcp_drive_lib"
+name = "omnidrive_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [[bin]]
@@ -16,8 +16,8 @@ name = "omnidrive"
 path = "src/main.rs"
 
 [[bin]]
-name = "omnidrive-server"
-path = "src/bin/mcp_server/main.rs"
+name = "omnidrive_server"
+path = "src/bin/omnidrive_server/main.rs"
 
 [build-dependencies]
 tauri-build = { version = "2", features = [] }

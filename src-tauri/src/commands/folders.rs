@@ -201,16 +201,16 @@ pub fn scan_folder_files(path: String) -> Result<FolderScanResult, String> {
 
 /// Get the path to the MCP server binary (for connection info)
 #[tauri::command]
-pub fn get_mcp_server_path() -> Result<String, String> {
+pub fn get_omnidrive_path() -> Result<String, String> {
     // In development, the binary is in the target directory
     // In production, it's bundled alongside the app
     let current_exe = std::env::current_exe()
         .map_err(|e| format!("Failed to get executable path: {}", e))?;
 
     let server_name = if cfg!(target_os = "windows") {
-        "omnidrive-server.exe"
+        "omnidrive_server.exe"
     } else {
-        "omnidrive-server"
+        "omnidrive_server"
     };
 
     // Look for the server binary next to the main executable

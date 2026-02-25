@@ -69,7 +69,7 @@ pub async fn start_sse_server(
         ..Default::default()
     };
     
-    let http_service: StreamableHttpService<McpDriveServer, LocalSessionManager> = 
+    let http_service: StreamableHttpService<OmniDriveServer, LocalSessionManager> = 
         StreamableHttpService::new(
             move || Ok(server.clone()),
             Default::default(),

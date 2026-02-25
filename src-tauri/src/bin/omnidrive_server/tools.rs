@@ -976,7 +976,7 @@ impl OmniDriveServer {
 
             // Security: ensure extracted path stays within destination
             if !out_path.starts_with(&dest_path) {
-                eprintln!("[mcp_server] Skipping suspicious zip entry: {}", entry.name());
+                eprintln!("[omnidrive] Skipping suspicious zip entry: {}", entry.name());
                 continue;
             }
 
@@ -1131,7 +1131,7 @@ impl OmniDriveServer {
 
 // ─── Helper: list_directory recursive ───
 
-impl McpDriveServer {
+impl OmniDriveServer {
     async fn list_directory_recursive(
         &self,
         dir_path: &std::path::Path,

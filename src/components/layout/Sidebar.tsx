@@ -46,7 +46,7 @@ export function Sidebar<T extends string>({
                 </section>
 
                 <section className="sidebar__section" aria-label="Places">
-                    <p className="sidebar__section-label">Places</p>
+                    <p className="sidebar__section-label">workspace</p>
                     <nav className="sidebar__nav" aria-label="Primary">
                         {items.map((item) => {
                             const isActive = active === item.id;
@@ -72,7 +72,7 @@ export function Sidebar<T extends string>({
                 <div className={`sidebar__server-pill ${serverUiState === "active" ? "is-live" : "is-dormant"}`}>
                     <span className="sidebar__server-dot" />
                     <div>
-                        <p>Omni Server</p>
+                        <p>omni server</p>
                         <span>
                             {serverUiState === "active" ? "Active" : "Dormant"} · {activeFolders} folder
                             {activeFolders === 1 ? "" : "s"}

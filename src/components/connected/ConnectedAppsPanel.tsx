@@ -66,67 +66,69 @@ export function ConnectedAppsPanel() {
     };
 
     return (
-        <div className="panel apps-panel">
-            <div className="panel-header">
-                <div className="panel-header-content">
-                    <div className="panel-title-wrapper">
-                        <Cpu className="panel-title-icon" size={20} />
-                        <h2 className="panel-title">Connected AI Agents</h2>
-                    </div>
-                    <p className="panel-subtitle">Manage agents with real-time access to your shared folders</p>
+        <section className="content-section">
+            <header className="section-header section-header--stacked">
+                <div>
+                    <h2>Connected AI Agents</h2>
+                    <p>Manage agents with real-time access to your shared folders.</p>
                 </div>
-            </div>
+            </header>
 
-            <div className="panel-content">
-                <div className="apps-grid">
-                    {agents.length > 0 ? (
-                        agents.map((agent) => (
-                            <div key={agent.name} className={`app-card is-${agent.status}`}>
-                                <div className="app-card-header">
-                                    <div className="app-icon-placeholder">
-                                        <Cpu size={24} />
+            <div className="content-section__body">
+                <div className="settings-stack">
+                    <section className="settings-group">
+                        <h3>Active Connections</h3>
+                        <p>Agents detected by OmniDrive in the recent polling window.</p>
+                        <div className="apps-grid">
+                            {agents.length > 0 ? (
+                                agents.map((agent) => (
+                                    <div key={agent.name} className={`app-card is-${agent.status}`}>
+                                        <div className="app-card-header">
+                                            <div className="app-icon-placeholder">
+                                                <Cpu size={20} />
+                                            </div>
+                                            <div className="app-info">
+                                                <h3 className="app-name">{agent.name}</h3>
+                                                <p className="app-meta">Last seen: {formatLastSeen(agent.last_seen)}</p>
+                                            </div>
+                                            {getStatusBadge(agent.status)}
+                                        </div>
                                     </div>
-                                    <div className="app-info">
-                                        <h3 className="app-name">{agent.name}</h3>
-                                        <p className="app-meta">Last seen: {formatLastSeen(agent.last_seen)}</p>
-                                    </div>
-                                    {getStatusBadge(agent.status)}
+                                ))
+                            ) : (
+                                <div className="app-card empty-agents">
+                                    <p className="text-secondary">No AI agents connected yet. Connect an agent below to see it appear here.</p>
                                 </div>
+                            )}
+                        </div>
+                    </section>
+
+                    <section className="settings-group">
+                        <h3>Quick Setup Snippets</h3>
+                        <p>Add this to your MCP client configuration file to connect.</p>
+                        <div className="snippet-container">
+                            <div className="snippet-header">
+                                <span className="snippet-client">Claude Desktop</span>
+                                <button
+                                    type="button"
+                                    className="button button--secondary"
+                                    onClick={() => handleCopy("claude", claudeConfig)}
+                                >
+                                    {copiedId === "claude" ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
+                                    {copiedId === "claude" ? "Copied" : "Copy JSON"}
+                                </button>
                             </div>
-                        ))
-                    ) : (
-                        <div className="app-card empty-agents">
-                            <p className="text-secondary">No AI agents connected yet. Connect an agent below to see it appear here.</p>
+                            <pre className="snippet-code">
+                                <code>{claudeConfig}</code>
+                            </pre>
+                            <p className="snippet-help text-xs text-secondary mt-2">
+                                <ShieldAlert size={12} className="inline mr-1" />
+                                File path: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>
+                            </p>
                         </div>
-                    )}
-                </div>
-
-                <div className="setup-section mt-8">
-                    <h3 className="setup-title">Quick Setup Snippets</h3>
-                    <p className="setup-description">Add this to your MCP client configuration file to connect.</p>
-
-                    <div className="snippet-container">
-                        <div className="snippet-header">
-                            <span className="snippet-client">Claude Desktop</span>
-                            <button
-                                type="button"
-                                className="btn btn-ghost btn-sm"
-                                onClick={() => handleCopy("claude", claudeConfig)}
-                            >
-                                {copiedId === "claude" ? <CheckCircle2 size={14} className="text-green-500" /> : <Copy size={14} />}
-                                {copiedId === "claude" ? "Copied" : "Copy JSON"}
-                            </button>
-                        </div>
-                        <pre className="snippet-code">
-                            <code>{claudeConfig}</code>
-                        </pre>
-                        <p className="snippet-help text-xs text-secondary mt-2">
-                            <ShieldAlert size={12} className="inline mr-1" />
-                            File path: <code>~/Library/Application Support/Claude/claude_desktop_config.json</code>
-                        </p>
-                    </div>
+                    </section>
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

@@ -26,7 +26,7 @@ pub fn run() {
             commands::toggle_permission,
             commands::toggle_folder_enabled,
             commands::scan_folder_files,
-            commands::get_mcp_server_path,
+            commands::get_omnidrive_path,
             commands::get_app_config,
             commands::update_max_file_size,
             commands::activity::get_activity_log,

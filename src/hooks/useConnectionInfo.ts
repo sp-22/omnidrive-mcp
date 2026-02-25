@@ -7,7 +7,7 @@ export function useConnectionInfo() {
 
     useEffect(() => {
         api.getMcpServerPath().then(setServerPath).catch(() => {
-            setServerPath("mcp_server");
+            setServerPath("omnidrive_server");
         });
     }, []);
 

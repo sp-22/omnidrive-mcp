@@ -20,20 +20,20 @@ if (!existsSync(binDir)) {
 }
 
 // Create a dummy file FIRST to satisfy tauri build.rs
-const destBinaryPath = join(binDir, `omnidrive-server-${targetTriple}`);
+const destBinaryPath = join(binDir, `omnidrive_server-${targetTriple}`);
 if (!existsSync(destBinaryPath)) {
     console.log('Creating dummy binary for tauri-build...');
     writeFileSync(destBinaryPath, '');
 }
 
 // Build the release binary
-execSync('cargo build --release --bin omnidrive-server', {
+execSync('cargo build --release --bin omnidrive_server', {
     stdio: 'inherit',
     cwd: join(process.cwd(), 'src-tauri')
 });
 
 // Copy binary to correct location with target appendeed
-const srcBinaryPath = join(process.cwd(), 'src-tauri', 'target', 'release', 'omnidrive-server');
+const srcBinaryPath = join(process.cwd(), 'src-tauri', 'target', 'release', 'omnidrive_server');
 
 console.log(`Copying sidecar from ${srcBinaryPath} to ${destBinaryPath}`);
 copyFileSync(srcBinaryPath, destBinaryPath);

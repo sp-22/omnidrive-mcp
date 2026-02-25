@@ -48,7 +48,7 @@ pub fn start_sse_mode(app: AppHandle, port: u16, allowed_origins: Vec<String>) -
     }
 
     let shell = app.shell();
-    let command = shell.sidecar("omnidrive-server").map_err(|e| e.to_string())?
+    let command = shell.sidecar("omnidrive_server").map_err(|e| e.to_string())?
         .args(args);
 
     let (mut rx, child) = command.spawn().map_err(|e| e.to_string())?;

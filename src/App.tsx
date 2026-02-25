@@ -276,8 +276,8 @@ function FoldersTab({
     <section className="content-section">
       <header className="section-header">
         <div>
-          <h2>Shared Folders</h2>
-          <p>Folders accessible to AI agents through MCP.</p>
+          <h2>Share local folders with agents</h2>
+          <p>Control exactly what OmniDrive exposes through MCP.</p>
         </div>
         <button
           type="button"
@@ -286,41 +286,43 @@ function FoldersTab({
           disabled={actionsDisabled}
         >
           <FolderPlus size={16} />
-          Connect Folder
+          Add Folder
         </button>
       </header>
 
-      {showScanWarning && scanResult ? (
-        <ScanWarning
-          result={scanResult}
-          onDismiss={onDismissScanWarning}
-          disabled={actionsDisabled}
-        />
-      ) : null}
+      <div className="content-section__body">
+        {showScanWarning && scanResult ? (
+          <ScanWarning
+            result={scanResult}
+            onDismiss={onDismissScanWarning}
+            disabled={actionsDisabled}
+          />
+        ) : null}
 
-      {loading ? (
-        <div className="panel loading-state">Loading shared folders…</div>
-      ) : null}
+        {loading ? (
+          <div className="panel loading-state">Loading shared folders…</div>
+        ) : null}
 
-      {!loading && folders.length === 0 ? (
-        <EmptyState onAddFolder={onAddFolder} actionsDisabled={actionsDisabled} />
-      ) : null}
+        {!loading && folders.length === 0 ? (
+          <EmptyState onAddFolder={onAddFolder} actionsDisabled={actionsDisabled} />
+        ) : null}
 
-      {!loading && folders.length > 0 ? (
-        <div className="folder-grid">
-          {folders.map((folder, index) => (
-            <FolderCard
-              key={folder.path}
-              folder={folder}
-              index={index}
-              onRemove={onRemoveFolder}
-              onSetPermission={onSetPermission}
-              onToggleEnabled={onToggleEnabled}
-              disabled={actionsDisabled}
-            />
-          ))}
-        </div>
-      ) : null}
+        {!loading && folders.length > 0 ? (
+          <div className="folder-grid">
+            {folders.map((folder, index) => (
+              <FolderCard
+                key={folder.path}
+                folder={folder}
+                index={index}
+                onRemove={onRemoveFolder}
+                onSetPermission={onSetPermission}
+                onToggleEnabled={onToggleEnabled}
+                disabled={actionsDisabled}
+              />
+            ))}
+          </div>
+        ) : null}
+      </div>
     </section>
   );
 }
@@ -337,10 +339,9 @@ function EmptyState({
       <div className="empty-state__icon">
         <FolderPlus size={24} />
       </div>
-      <h3>No bridges built yet.</h3>
+      <h3>Start by adding one folder</h3>
       <p>
-        Select a folder to start sharing context with your AI. Your files never leave
-        your computer.
+        Give your agents context without moving files to the cloud. All access stays local.
       </p>
       <button
         type="button"
@@ -349,7 +350,7 @@ function EmptyState({
         disabled={actionsDisabled}
       >
         <FolderPlus size={16} />
-        Add First Folder
+        Add first folder
       </button>
     </div>
   );
@@ -418,130 +419,136 @@ function SettingsTab({
     <section className="content-section">
       <header className="section-header section-header--stacked">
         <div>
-          <h2>Settings</h2>
-          <p>Configure OmniDrive behavior.</p>
+          <h2>Configure workspace behavior</h2>
+          <p>Tune appearance, limits, and browser bridge access.</p>
         </div>
       </header>
 
-      <div className="settings-stack">
-        <section className="settings-group">
-          <h3>Appearance</h3>
-          <p>Use system appearance or override it for this app.</p>
-          <div className="segment-control" role="radiogroup" aria-label="Appearance">
-            {appearanceOptions.map((option) => (
-              <button
-                key={option}
-                type="button"
-                className={`segment-control__button ${themePreference === option ? "is-selected" : ""}`}
-                role="radio"
-                aria-checked={themePreference === option}
-                onClick={() => setThemePreference(option)}
-                disabled={actionsDisabled}
-              >
-                {option.charAt(0).toUpperCase() + option.slice(1)}
-              </button>
-            ))}
-          </div>
-          <span className="settings-note">Current appearance: {resolvedTheme}</span>
-        </section>
-
-        <section className="settings-group">
-          <h3>File Size Limit</h3>
-          <p>Maximum file size (in MB) that AI agents can read.</p>
-          <div className="range-row">
-            <input
-              type="range"
-              min="10"
-              max="50"
-              value={maxFileSizeMb}
-              onChange={(event) => setMaxFileSizeMb(Number(event.target.value))}
-              aria-label="Maximum file size in MB"
-              disabled={actionsDisabled}
-            />
-            <span>{maxFileSizeMb} MB</span>
-          </div>
-        </section>
-
-        <section className="settings-group">
-          <h3>Browser SSE Mode</h3>
-          <p>Allow browser-based AI tools to connect securely to your local files.</p>
-          <div className="panel" style={{ marginTop: '0.75rem' }}>
-            <div className="inline-row" style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
-              <label htmlFor="sse-toggle" style={{ fontWeight: 500 }}>Enable SSE Server</label>
-              <button
-                id="sse-toggle"
-                type="button"
-                className={`button ${sseRunning ? 'button--danger' : 'button--primary'}`}
-                onClick={toggleSse}
-                disabled={actionsDisabled}
-              >
-                {sseRunning ? "Stop Server" : "Start Server"}
-              </button>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <label htmlFor="sse-port" style={{ fontSize: '0.875rem' }}>Port Number</label>
-              <input
-                id="sse-port"
-                type="number"
-                className="input-field"
-                value={ssePort}
-                onChange={(e) => setSsePort(Number(e.target.value))}
-                disabled={sseRunning || actionsDisabled}
-              />
-            </div>
-
-            {sseUrl && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: '1rem' }}>
-                <label style={{ fontSize: '0.875rem' }}>Connection URL (Paste in MCP config)</label>
-                <div className="inline-row">
-                  <input
-                    type="text"
-                    readOnly
-                    className="input-field"
-                    value={sseUrl}
-                    style={{ flex: 1, fontFamily: 'monospace' }}
-                  />
-                  <button
-                    type="button"
-                    className="button button--secondary"
-                    onClick={() => navigator.clipboard.writeText(sseUrl)}
-                  >
-                    Copy
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {approvedOrigins.length > 0 && (
+      <div className="content-section__body">
+        <div className="settings-stack">
           <section className="settings-group">
-            <h3>Approved Browser Tools</h3>
-            <p>Origins that have permission to connect via SSE.</p>
-            <div className="list-stack" style={{ marginTop: '0.5rem' }}>
-              {approvedOrigins.map(origin => (
-                <div key={origin} className="panel panel--subtle inline-row" style={{ justifyContent: 'space-between', padding: '8px 12px', border: '1px solid var(--border)', borderRadius: '8px' }}>
-                  <span style={{ fontSize: '13px', fontFamily: 'monospace' }}>{origin}</span>
-                  <button
-                    type="button"
-                    className="button button--secondary"
-                    style={{ minHeight: '26px', padding: '0 8px' }}
-                    onClick={() => handleRevoke(origin)}
-                  >
-                    Revoke
-                  </button>
-                </div>
+            <h3>Appearance</h3>
+            <p>Use system defaults or lock OmniDrive to a single theme.</p>
+            <div className="segment-control" role="radiogroup" aria-label="Appearance">
+              {appearanceOptions.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className={`segment-control__button ${themePreference === option ? "is-selected" : ""}`}
+                  role="radio"
+                  aria-checked={themePreference === option}
+                  onClick={() => setThemePreference(option)}
+                  disabled={actionsDisabled}
+                >
+                  {option.charAt(0).toUpperCase() + option.slice(1)}
+                </button>
               ))}
             </div>
+            <span className="settings-note">Current appearance: {resolvedTheme}</span>
           </section>
-        )}
 
-        <section className="settings-group">
-          <h3>About OmniDrive</h3>
-          <p>Version 0.1.0</p>
-          <p>Securely share local files with AI agents via the Model Context Protocol.</p>
-        </section>
+          <section className="settings-group">
+            <h3>File Size Limit</h3>
+            <p>Set the largest file size an agent can access in one request.</p>
+            <div className="range-row">
+              <input
+                type="range"
+                min="10"
+                max="50"
+                value={maxFileSizeMb}
+                onChange={(event) => setMaxFileSizeMb(Number(event.target.value))}
+                aria-label="Maximum file size in MB"
+                disabled={actionsDisabled}
+              />
+              <span>{maxFileSizeMb} MB</span>
+            </div>
+          </section>
+
+          <section className="settings-group">
+            <h3>Browser SSE Mode</h3>
+            <p>Allow browser AI tools to connect securely to local folders.</p>
+            <div className="panel settings-inline-panel">
+              <div className="inline-row settings-inline-panel__row">
+                <label htmlFor="sse-toggle" className="settings-inline-panel__label">
+                  Enable SSE server
+                </label>
+                <button
+                  id="sse-toggle"
+                  type="button"
+                  className={`button ${sseRunning ? 'button--danger' : 'button--primary'}`}
+                  onClick={toggleSse}
+                  disabled={actionsDisabled}
+                >
+                  {sseRunning ? "Stop server" : "Start server"}
+                </button>
+              </div>
+
+              <div className="settings-field-stack">
+                <label htmlFor="sse-port" className="settings-field-label">
+                  Port number
+                </label>
+                <input
+                  id="sse-port"
+                  type="number"
+                  className="input-field"
+                  value={ssePort}
+                  onChange={(e) => setSsePort(Number(e.target.value))}
+                  disabled={sseRunning || actionsDisabled}
+                />
+              </div>
+
+              {sseUrl && (
+                <div className="settings-field-stack settings-field-stack--spaced">
+                  <label className="settings-field-label">Connection URL (paste in MCP config)</label>
+                  <div className="inline-row settings-field-stack__copy-row">
+                    <input
+                      type="text"
+                      readOnly
+                      className="input-field"
+                      value={sseUrl}
+                      data-mono
+                    />
+                    <button
+                      type="button"
+                      className="button button--secondary"
+                      onClick={() => navigator.clipboard.writeText(sseUrl)}
+                    >
+                      Copy URL
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </section>
+
+          {approvedOrigins.length > 0 && (
+            <section className="settings-group">
+              <h3>Approved Browser Tools</h3>
+              <p>Origins that have permission to connect via SSE.</p>
+              <div className="list-stack list-stack--compact">
+                {approvedOrigins.map(origin => (
+                  <div key={origin} className="panel panel--subtle inline-row settings-origin-row">
+                    <span className="settings-origin-row__value">{origin}</span>
+                    <button
+                      type="button"
+                      className="button button--secondary"
+                      data-compact
+                      onClick={() => handleRevoke(origin)}
+                    >
+                      Revoke
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <section className="settings-group">
+            <h3>About OmniDrive</h3>
+            <p>omnidrive v0.1.0</p>
+            <p>Securely share local files with AI agents via the Model Context Protocol.</p>
+          </section>
+        </div>
       </div>
     </section>
   );

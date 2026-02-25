@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { Activity, Database, Edit, Trash2, Eye, Server } from "lucide-react";
+import { Database, Edit, Trash2, Eye, Server } from "lucide-react";
 import { useActivityLog } from "../../hooks/useActivityLog";
 import type { ActivityCategory } from "../../lib/types";
 
@@ -23,10 +23,10 @@ export function ActivityLogPanel() {
 
     const getCategoryIcon = (category: string) => {
         switch (category) {
-            case "read": return <Eye size={14} className="icon-read" />;
-            case "write": return <Edit size={14} className="icon-write" />;
-            case "delete": return <Trash2 size={14} className="icon-delete" />;
-            default: return <Server size={14} className="icon-system" />;
+            case "read": return <Eye size={12} className="icon-read" />;
+            case "write": return <Edit size={12} className="icon-write" />;
+            case "delete": return <Trash2 size={12} className="icon-delete" />;
+            default: return <Server size={12} className="icon-system" />;
         }
     };
 
@@ -49,24 +49,25 @@ export function ActivityLogPanel() {
     };
 
     return (
-        <div className="panel activity-panel">
-            <div className="panel-header">
-                <div className="panel-header-content">
-                    <div className="panel-title-wrapper">
-                        <Activity className="panel-title-icon" size={20} />
-                        <h2 className="panel-title">Agent Activity Log</h2>
-                    </div>
-                    <p className="panel-subtitle">Real-time telemetry of all MCP AI agent operations</p>
+        <section className="content-section content-section--activity">
+            <header className="section-header">
+                <div>
+                    <h2>Agent Activity Log</h2>
+                    <p>Real-time telemetry of all MCP AI agent operations.</p>
                 </div>
-
-                <button onClick={clear} className="btn btn-secondary btn-sm" disabled={entries.length === 0}>
+                <button
+                    type="button"
+                    onClick={clear}
+                    className="button button--secondary"
+                    disabled={entries.length === 0}
+                >
                     Clear Logs
                 </button>
-            </div>
+            </header>
 
-            <div className="panel-content">
-                <div className="activity-tabs">
-                    <div className="segment-control">
+            <div className="content-section__body">
+                <div className="activity-toolbar">
+                    <div className="segment-control activity-filters">
                         {categories.map((cat) => (
                             <button
                                 key={cat.id}
@@ -79,7 +80,7 @@ export function ActivityLogPanel() {
                     </div>
                 </div>
 
-                <div className="activity-log-container surface surface-sunken">
+                <div className="activity-log-container">
                     {entries.length === 0 ? (
                         <div className="empty-state">
                             <Database className="empty-state-icon" size={32} />
@@ -111,6 +112,6 @@ export function ActivityLogPanel() {
                     )}
                 </div>
             </div>
-        </div>
+        </section>
     );
 }

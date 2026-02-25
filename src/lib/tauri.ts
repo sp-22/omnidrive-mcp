@@ -30,7 +30,7 @@ export async function scanFolderFiles(path: string): Promise<FolderScanResult> {
 /// --- Config ---
 
 export async function getMcpServerPath(): Promise<string> {
-    return invoke<string>("get_mcp_server_path");
+    return invoke<string>("get_omnidrive_path");
 }
 
 export async function getAppConfig(): Promise<AppConfig> {
