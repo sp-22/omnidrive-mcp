@@ -10,6 +10,9 @@ if (!targetMatch) {
     process.exit(1);
 }
 const targetTriple = targetMatch[1];
+const isWindows = targetTriple.includes('windows');
+const sidecarFileName = `omnidrive_server-${targetTriple}${isWindows ? '.exe' : ''}`;
+const builtBinaryName = `omnidrive_server${isWindows ? '.exe' : ''}`;
 
 console.log(`Building sidecar for target: ${targetTriple}`);
 
@@ -20,7 +23,7 @@ if (!existsSync(binDir)) {
 }
 
 // Create a dummy file FIRST to satisfy tauri build.rs
-const destBinaryPath = join(binDir, `omnidrive_server-${targetTriple}`);
+const destBinaryPath = join(binDir, sidecarFileName);
 if (!existsSync(destBinaryPath)) {
     console.log('Creating dummy binary for tauri-build...');
     writeFileSync(destBinaryPath, '');
@@ -33,9 +36,8 @@ execSync('cargo build --release --bin omnidrive_server', {
 });
 
 // Copy binary to correct location with target appendeed
-const srcBinaryPath = join(process.cwd(), 'src-tauri', 'target', 'release', 'omnidrive_server');
+const srcBinaryPath = join(process.cwd(), 'src-tauri', 'target', 'release', builtBinaryName);
 
 console.log(`Copying sidecar from ${srcBinaryPath} to ${destBinaryPath}`);
 copyFileSync(srcBinaryPath, destBinaryPath);
 console.log('Sidecar bundled successfully!');
-
