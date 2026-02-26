@@ -63,6 +63,18 @@ If you just want to use OmniDrive, download the latest installer from:
 
 Available assets depend on platform and include installers such as `.dmg` (macOS), `.msi`/`.exe` (Windows), and Linux bundles.
 
+### macOS "damaged and can't be opened" fix
+
+If macOS blocks OmniDrive after downloading from Releases, run:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/OmniDrive.app
+xattr -dr com.apple.provenance /Applications/OmniDrive.app
+open /Applications/OmniDrive.app
+```
+
+If needed, right-click `OmniDrive.app` and choose **Open** once.
+
 ---
 
 ## 🔧 Build From Source (Developers)
