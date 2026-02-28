@@ -1,4 +1,4 @@
-# OmniDrive 🌌
+# OmniDrive
 
 **The secure, local-first gateway that bridges your personal files to any AI Agent.**
 
@@ -6,7 +6,7 @@ OmniDrive is a "Plug & Play" desktop application that allows you to selectively 
 
 ---
 
-## 🚀 Why OmniDrive?
+## Why OmniDrive?
 
 Most AI agents are currently "context blind"—they don't know what's on your machine unless you manually upload files. Existing solutions are either complex terminal tools or insecure "all-access" scripts.
 
@@ -18,7 +18,7 @@ Most AI agents are currently "context blind"—they don't know what's on your ma
 
 ---
 
-## ✨ Key Capabilities
+## Key Capabilities
 
 - **Universal Compatibility**: Works with any LLM client that supports the MCP standard.
 - **Plug & Play**: Add folders in seconds. No terminal commands, no environment variables.
@@ -28,25 +28,25 @@ Most AI agents are currently "context blind"—they don't know what's on your ma
 
 ---
 
-## 🛠️ Use Cases (Beyond Coding)
+## Use Cases (Beyond Coding)
 
 While OmniDrive is a must-have for developers, it is designed for everyone:
 
-### 📚 Research & Analysis
+### Research & Analysis
 Share your local library of PDFs and research notes. Ask your AI to synthesize trends across dozens of documents without ever hitting "upload."
 
-### 📂 Administrative Automation
+### Administrative Automation
 Give the AI access to your spreadsheets and invoices. Ask it to generate summaries, identify anomalies, or prepare monthly reports.
 
-### 🧠 Personal Knowledge Base
+### Personal Knowledge Base
 Bridge your Obsidian or Markdown notes to their AI agent. Talk to your "Second Brain" to find connections between your thoughts in real-time.
 
-### 💻 Advanced Software Engineering
+### Advanced Software Engineering
 Enable the AI to proactively fix bugs, refactor architecture, and verify changes across your entire repository with full Read/Write power.
 
 ---
 
-## 🛡️ Security Architecture
+## Security Architecture
 
 OmniDrive is built with a "Privacy First" philosophy:
 - **Canonical Path Validation**: Every request is verified against a secure whitelist of user-approved absolute paths.
@@ -55,7 +55,7 @@ OmniDrive is built with a "Privacy First" philosophy:
 
 ---
 
-## 📥 Download (End Users)
+## Download (End Users)
 
 If you just want to use OmniDrive, download the latest installer from:
 
@@ -77,7 +77,7 @@ If needed, right-click `OmniDrive.app` and choose **Open** once.
 
 ---
 
-## 🔧 Build From Source (Developers)
+## Build From Source (Developers)
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) 20+
@@ -110,7 +110,7 @@ Build artifacts are generated under `src-tauri/target/release/bundle/`.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork this repo
 2. Create a branch
@@ -121,7 +121,7 @@ To download source without Git, use GitHub's **Code -> Download ZIP** on the rep
 
 ---
 
-## 🚀 Release Process (Maintainers)
+## Release Process (Maintainers)
 
 This repository includes a GitHub Actions workflow that builds and publishes release assets for macOS, Windows, and Linux whenever a version tag is pushed.
 
@@ -148,7 +148,7 @@ This repository includes a GitHub Actions workflow that builds and publishes rel
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 - **Frontend**: React, TypeScript, Vanilla CSS (Premium Glassmorphism)
 - **Engine**: Rust (High-performance native sidecar)
@@ -157,6 +157,6 @@ This repository includes a GitHub Actions workflow that builds and publishes rel
 
 ---
 
-## 📄 License
+## License
 
 OmniDrive is released under the **MIT License**. See [LICENSE](LICENSE) for details.
